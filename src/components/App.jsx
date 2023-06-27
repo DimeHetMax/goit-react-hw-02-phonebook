@@ -8,25 +8,25 @@ export class App extends Component{
     name: ''
   }
   addContact = (event) => {
-    console.log(event)
-    console.log(event.target)
-    const idNew = nanoid()
     event.preventDefault()
+    const idNew = nanoid()
+    const name = event.target.elements.name.value;
+    const phone = event.target.elements.number.value;
     this.setState(prevState => ({
-      name: event.target[0].value,
-      phone: event.target[1].value,
+      name,
+      phone,
       contacts: [
         ...prevState.contacts,
         {
-          name: event.target[0].value,
-          phone: event.target[1].value,
+          name,
+          phone,
           id: idNew
         }
       ]
     }))
+    event.target.reset();
   }
   render(){
-    
     console.log(this.state)
     return(
       <div>
