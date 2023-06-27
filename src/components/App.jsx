@@ -26,10 +26,16 @@ export class App extends Component{
     }))
     event.target.reset();
   }
+  filterHandler = (event) =>{
+    const filter = event.target.value
+    console.log(filter)
+
+  }
   render(){
     console.log(this.state)
     return(
       <div>
+        <h1>Phonebook</h1>
         <form onSubmit={this.addContact}>
           <label>
             Name
@@ -50,12 +56,21 @@ export class App extends Component{
                 pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                 title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                 required
-                style={{display: "block", marginBottom:20}}
+                style={{display: "block", marginTop: 10, marginBottom:20}}
               />
             </label>
           <button type="submit" >Add Contact</button>
         </form>
-       
+        <div>
+          <h2>Contacts</h2>
+          <p>Find contacts by name</p>
+          <input type="text" name="filter" onChange={this.filterHandler}/>
+          <ul>
+            {this.state.contacts.map(({name,phone,id})=>{   
+                return<li key={id}><p>{name}: {phone}</p></li>
+            })}
+          </ul>
+        </div>
         <PhoneBook/>
       </div>
     )
