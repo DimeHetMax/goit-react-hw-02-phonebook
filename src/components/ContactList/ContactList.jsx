@@ -1,9 +1,12 @@
 import React from 'react';
-import { ContactItem } from 'components/ContactItem/ContactItem';
+import css from "./ContactList.module.css"
 
   
   
 export class ContactList extends React.Component {
+  handleDeleteContact = id => {
+    this.props.deleteContact(id);
+  };
   render() {
     const { contacts, filter } = this.props;
     const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
@@ -11,23 +14,13 @@ export class ContactList extends React.Component {
     return (
       <ul>
         {filter === '' ? (
-          contacts.map(({ name, phone, id }) => {
-           return( <li key={id}>
-                <ContactItem  name ={name} phone ={phone}/>
-                   </li>)
-          }
-        //   {return <li key={id}><p>{name}: {phone}</p></li>;}
-            // <ContactItem  name ={name} phone ={phone}/>
+          contacts.map(({ name, phone, id }) => 
+          {return <li className ={css.phoneItem}key={id}><p>{name}: {phone}</p><button onClick={() => this.handleDeleteContact(id)}>Delete</button></li>;}
           )
         ) : (
           filteredContacts.map(({ id, name, phone }) => 
-          {
-            return( <li key={id}>
-                 <ContactItem  name ={name} phone ={phone}/>
-                    </li>)
-           }
-        //   {return <li key={id}><p>{name}: {phone}</p></li>;}
-        // <ContactItem id={id} name ={name} phone ={phone}/>
+          
+          {return <li key={id}><p>{name}: {phone}</p><button onClick={() => this.handleDeleteContact(id)}>Delete</button></li>;}
           )
         )}
       </ul>

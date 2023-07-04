@@ -15,6 +15,12 @@ export class App extends Component{
     const idNew = nanoid()
     const name = event.target.elements.name.value;
     const phone = event.target.elements.number.value;
+    const contacts = this.state.contacts;
+    const existingContact = contacts.find(contact => contact.name === name);
+    if (existingContact) {
+      alert('This name already exists in the phonebook!');
+      return;
+    }
     this.setState(prevState => ({
       contacts: [
         ...prevState.contacts,
@@ -32,6 +38,12 @@ export class App extends Component{
     this.setState({ 
       filter });
   }
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
     const { contacts, filter } = this.state;
     return (
@@ -40,7 +52,7 @@ export class App extends Component{
         <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
         <Filter filter={filter} handleFilterChange={this.handleFilterChange} />
-        <ContactList contacts={contacts} filter={filter} />
+        <ContactList contacts={contacts} filter={filter} deleteContact={this.deleteContact} />
       </div>
     );
   }
