@@ -16,7 +16,7 @@ export class App extends Component{
     const name = event.target.elements.name.value;
     const phone = event.target.elements.number.value;
     const contacts = this.state.contacts;
-    const existingContact = contacts.find(contact => contact.name === name);
+    const existingContact = contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase());
     if (existingContact) {
       alert('This name already exists in the phonebook!');
       return;
